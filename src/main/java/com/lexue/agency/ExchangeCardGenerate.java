@@ -29,10 +29,15 @@ public class ExchangeCardGenerate {
 		    3010 0000         乐学高考艺考卡：第一位3，第二三位：语数外理化生史地政（00-08），后五位按顺序生成
 		    3020 0000         乐学高考艺考卡：第一位3，第二三位：语数外理化生史地政（00-08），后五位按顺序生成
 		    3090 0000         乐学高考艺考卡：第一位3，第二三位：2017高考英语串讲预测班【艺考定制】（09），后五位按顺序生成
+		 	2540 0001					254（商品id） 写作一课通 高考英语精品课
+		    5450 0001   545 高考英语四项全能卡 高考英语精品课
+		    1550 0001 155 阅读告别慌堵读 高考英语精品课
+		    1530 0001 153 完形填空一点通 高考英语精品课
+		    1390 0001 139语法集结号 高考英语精品课
 		 */
 		StringBuilder sb = new StringBuilder();
-		for(int i=0;i<55;i++){
-			String kemu="309";//科目
+		for(int i=0;i<120;i++){
+			String kemu="139";//科目
 			String number="";
 			if(i<10){
 				number="0000"+i;
@@ -47,14 +52,16 @@ public class ExchangeCardGenerate {
 			}
 			String cardNumber = kemu+number;
 			String password=getRandomString(8);
-			sb.append("insert into `agency_card` (`name`, `card_password`, `book_value`, `agency_id`, `status`, `sell_price`, `update_time`, `active_time`, `expire_time`, `user_id`, `mobile`, `send_time`, `usage_h5_url`, `desc`, `card_category`, `card_code`, `card_type`,`client`) values('乐学高考艺考卡','"+password+"','0','0','2','0','1494864000','1494864000','2073600','0',NULL,'0','','乐学高考艺考卡',NULL,'"+cardNumber+"','1','gk');\r\n");
+			sb.append("insert into `agency_card` (`name`, `card_password`, `book_value`, `agency_id`, `status`, `sell_price`, `update_time`, `active_time`, `expire_time`, `user_id`, `mobile`, `send_time`, `usage_h5_url`, `desc`, `card_category`, `card_code`, `card_type`,`client`)" +
+					                    " values('语法集结号','"+password+"','0','0','2','0','1500220800','1500220800','28339200','0',NULL,'0','','语法集结号',NULL,'"+cardNumber+"','1','gk');\r\n");
 		}
-		write("ceshi.sql", sb.toString());
+		//后续手动写update到agency_card_shop表数据
+		write("语法集结号.sql", sb.toString());
 		System.out.println("执行完成");
 		
 	}
     public static String getRandomString(int length) { //length表示生成字符串的长度
-        String base = "abcdefghijklmnopqrstuvwxyz0123456789";
+        String base = "abcdefghijkmnpqrstuvwxyz23456789";
         Random random = new Random();
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < length; i++) {     
