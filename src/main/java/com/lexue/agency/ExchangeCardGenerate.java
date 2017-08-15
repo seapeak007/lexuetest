@@ -35,10 +35,11 @@ public class ExchangeCardGenerate {
 		    1530 0001 153 完形填空一点通 高考英语精品课
 		    1390 0001 139语法集结号 高考英语精品课
 		    5900 0001 - 59000120 590  南京石头培优高二暑假班课程
+		    6030 0000 - 60300119 603 南京石头培优高一暑假班课程
 		 */
 		StringBuilder sb = new StringBuilder();
 		for(int i=0;i<120;i++){
-			String kemu="590";//科目
+			String kemu="603";//科目
 			String number="";
 			if(i<10){
 				number="0000"+i;
@@ -54,10 +55,10 @@ public class ExchangeCardGenerate {
 			String cardNumber = kemu+number;
 			String password=getRandomString(8);
 			sb.append("insert into `agency_card` (`name`, `card_password`, `book_value`, `agency_id`, `status`, `sell_price`, `update_time`, `active_time`, `expire_time`, `user_id`, `mobile`, `send_time`, `usage_h5_url`, `desc`, `card_category`, `card_code`, `card_type`,`client`)" +
-					                    " values('高二暑假班','"+password+"','210','0','2','0','1501776000','1501776000','34041600','0',NULL,'0','','高二暑假班',NULL,'"+cardNumber+"','1','gk');\r\n");
+					                    " values('高一暑假班','"+password+"','120','0','2','0','1502726400','1502726400','1555200','0',NULL,'0','','高一暑假班',NULL,'"+cardNumber+"','1','gk');\r\n");
 		}
 		//后续手动写update到agency_card_shop表数据
-		write("高二暑假班.sql", sb.toString());
+		write("datas.sql", sb.toString());
 		System.out.println("执行完成");
 		
 	}
