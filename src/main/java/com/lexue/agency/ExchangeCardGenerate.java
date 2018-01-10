@@ -4,11 +4,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Random;
 
 
 public class ExchangeCardGenerate {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		char[] passArr={'1','2','3','4','5','6','7','8','9','0','a','b','c','d','e','f','g','h','i','g','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
 		/**
 		 * 	00000001 语文
@@ -36,10 +38,40 @@ public class ExchangeCardGenerate {
 		    1390 0001 139语法集结号 高考英语精品课
 		    5900 0001 - 59000120 590  南京石头培优高二暑假班课程
 		    6030 0000 - 60300119 603 南京石头培优高一暑假班课程
+			 6870  0001-0110   2018高考语文10节课逆袭突破班  卡有效期至 2017.11.24 11:00:00 - 2018.6.10 23:59:59
+			 6880   0001-0110   2018高考数学10节课逆袭突破班 卡有效期至 2017.11.24 11:00:00 - 2018.6.10 23:59:59
+			 6890   0001-0110   2018高考英语10节课逆袭突破班  卡有效期至 2017.11.24 11:00:00 - 2018.6.10 23:59:59
+			 6900   0001-0110   2018高考文综10节课逆袭突破班 卡有效期至 2017.11.24 11:00:00 - 2018.6.10 23:59:59
+			 6910   0001-0110   2018高考文科全科10节课逆袭突破班 卡有效期至 2017.11.24 11:00:00 - 2018.6.10 23:59:59
+
+		 	496 	2018高考【数理化】全程班	2018高考【数理化】学习套卡 	100	5	20170503 16:51:09 - 20180610 00:00:00
+		 433	2018高考地理全程班	2018高考地理学习套卡	50	5	20170413 19:19:28 - 20180610 00:00:00
+		 431	2018高考历史全程班	2018高考历史学习套卡	50	5	20170413 19:15:06 - 20180610 00:00:00
+		 429	2018高考政治全程班	2018高考政治学习套卡	50	5	20170413 19:10:04 - 20180610 00:00:00
+		 427	2018高考生物全程班	2018高考生物学习套卡	100	5	20170413 19:04:38 - 20180610 00:00:00
+		 425	2018高考化学全程班	2018高考化学学习套卡	100	5	20170413 19:00:04 - 20180610 00:00:00
+		 423	2018高考物理全程班	2018高考物理学习套卡	100	5	20170413 18:55:18 - 20180610 00:00:00
+		 421	2018高考英语全程班	2018高考英语学习套卡	100	5	20170413 18:49:13 - 20180610 00:00:00
+		 419	2018高考文科数学全程班	2018高考文科数学学习套卡	100	5	20170413 18:43:35 - 20180610 00:00:00
+		 417	2018高考理科数学全程班	2018高考理科数学学习套卡	100	5	20170413 18:36:44 - 20180610 00:00:00
+		 415	2018高考语文全程班	2018高考语文学习套卡	100	5	20170413 18:17:20 - 20180610 00:00:00
 		 */
 		StringBuilder sb = new StringBuilder();
-		for(int i=0;i<120;i++){
-			String kemu="603";//科目
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
+
+		String kemu="415";//科目
+		String name="2018高考语文学习套卡" ;
+		long active_time =sdf.parse("20170413 18:17:20").getTime()/1000 ;
+		long  expire_time = sdf.parse("20180610 00:00:00").getTime()/1000 -active_time;
+
+		int mallType =9 ;
+		int agency_id= 11;
+		int agency_tag_id =230 ;
+		String client="gk" ;
+
+		System.out.println("有效时间："+expire_time);
+
+		for(int i=1;i<=105;i++){
 			String number="";
 			if(i<10){
 				number="0000"+i;
@@ -54,16 +86,32 @@ public class ExchangeCardGenerate {
 			}
 			String cardNumber = kemu+number;
 			String password=getRandomString(8);
-			sb.append("insert into `agency_card` (`name`, `card_password`, `book_value`, `agency_id`, `status`, `sell_price`, `update_time`, `active_time`, `expire_time`, `user_id`, `mobile`, `send_time`, `usage_h5_url`, `desc`, `card_category`, `card_code`, `card_type`,`client`)" +
-					                    " values('高一暑假班','"+password+"','120','0','2','0','1502726400','1502726400','1555200','0',NULL,'0','','高一暑假班',NULL,'"+cardNumber+"','1','gk');\r\n");
+			sb.append("insert into `agency_card` (`name`, `card_password`, `book_value`, `agency_id`, `status`, `sell_price`" +
+					", `update_time`, `active_time`, `expire_time`, `user_id`, `mobile`, `send_time`, `usage_h5_url`, `desc`" +
+					", `card_category`, `card_code`, `card_type`,`client`)" +
+					" values('"+name+"','"+password+"','0','0','2','0','"+active_time+"','"+active_time+"','"+expire_time+"','0',NULL,'0'" +
+					",'','"+name+"',NULL,'"+cardNumber+"','1','"+client+"');\r\n");
+
 		}
+
+		//agency_card_shop
+//			insert into agency_card_shop  SELECT f.card_id,9,687,1,NULL from agency_card f where f.card_code like '68700%' ;
+		sb.append("insert into agency_card_shop  SELECT f.card_id," +
+				mallType+","+kemu+",1,NULL from agency_card f where f.card_code like '"
+				+kemu+"%' ;\r\n");
+//			-- agency_card
+//			update agency_card set agency_id=10,agency_tag_id=229 where card_code like '68700%'  ;
+		sb.append("update agency_card set agency_id=" +
+				agency_id+",agency_tag_id="+agency_tag_id+" where card_code like '"
+				+kemu+"%' ;\r\n");
+
 		//后续手动写update到agency_card_shop表数据
-		write("datas.sql", sb.toString());
+		write(kemu+"datas.sql", sb.toString());
 		System.out.println("执行完成");
 		
 	}
     public static String getRandomString(int length) { //length表示生成字符串的长度
-        String base = "abcdefghijkmnpqrstuvwxyz23456789";
+        String base = "abcdfghjkmnpqrstuvwxyz23456789";
         Random random = new Random();
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < length; i++) {     
