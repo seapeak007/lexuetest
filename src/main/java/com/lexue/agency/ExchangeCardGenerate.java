@@ -91,6 +91,8 @@ public class ExchangeCardGenerate {
 
 		System.out.println("有效时间："+expire_time);
 
+		sb.append("use videobase ;\r\n");
+
 		for(int i=1;i<=505;i++){
 			String number="";
 			if(i<10){
