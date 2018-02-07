@@ -75,25 +75,26 @@ public class ExchangeCardGenerate {
 		 640	琦思妙想初一数学寒假班	琦思妙想初一数学寒假班套卡	100	5	20171110 00:00:00 - 20190704 23:00:00
 		 353	中考数学100天冲刺班	中考数学100天冲刺班套卡	100	5	20170302 18:20:00 - 20190901 18:20:00
 		 801	数学英语试听课程包	数学英语试听学习套卡	500	5	20180108 16:00:00 - 20190108 16:00:00
+		 863    石头培优2017-2018高二英语寒假班 10 5 2018.2.7 00:00:00-2018.2.28 23:59:59
 		 */
 		StringBuilder sb = new StringBuilder();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
 
-		String kemu="801";//科目
-		String name="数学英语试听学习套卡" ;
-		long active_time =sdf.parse("20180111 00:00:01").getTime()/1000 ;
-		long  expire_time = sdf.parse("20190112 00:00:01").getTime()/1000 -active_time;
+		String kemu="863";//科目
+		String name="石头培优2017-2018高二英语寒假班" ;
+		long active_time =sdf.parse("20180207 00:00:00").getTime()/1000 ;
+		long  expire_time = sdf.parse("20180228 23:59:59").getTime()/1000 -active_time;
 
 		int mallType =9 ;
-		int agency_id= 12;
-		int agency_tag_id =231 ;
-		String client="zk" ;
+		int agency_id= 10;
+		int agency_tag_id =227 ;
+		String client="gk" ;
 
 		System.out.println("有效时间："+expire_time);
 
 		sb.append("use videobase ;\r\n");
 
-		for(int i=1;i<=505;i++){
+		for(int i=1;i<=15;i++){
 			String number="";
 			if(i<10){
 				number="0000"+i;
